@@ -1,34 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Using Clerk Organizations to Create Role-Based (RBAC) Authentication in Next.js
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project demonstrates how to implement Role-Based Access Control (RBAC) authentication in a Next.js application using Clerk Organizations. Clerk Organizations is a user authentication and management platform that allows you to easily add RBAC functionality to your web applications.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Before getting started, ensure you have the following installed:
 
-## Learn More
+- Node.js (v14 or higher)
+- npm or Yarn
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To install and run the project, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Clone the repository: `git clone https://github.com/your-username/your-project.git`
+2. Navigate to the project folder: `cd your-project`
+3. Install the dependencies: `npm install` or `yarn install`
+4. Start the development server: `npm run dev` or `yarn dev`
+5. Open your browser and visit `http://localhost:3000` to see the application.
 
-## Deploy on Vercel
+### Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Step 1: Sign Up and Create Organizations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Sign up for an account on Clerk (https://clerk.com/) and create a new project.
+
+#### Step 2: Integrate Clerk Organizations
+
+- Follow the integration guide provided by Clerk (https://clerk.com/docs/organizations/overview) to use Clerk Organizations into your Next.js application.
+- Use the Clerk API to manage user roles and permissions based on the organizations they belong to.
+
+### Configuration
+
+In the `.env.local` file, you can customize the following environment variables:
+
+- `CLERK_FRONTEND_API`: Your Clerk Frontend API key.
+- `CLERK_API_URL`: The URL for the Clerk API.
+- `NEXT_PUBLIC_APP_URL`: The public URL of your Next.js application.
+
+### Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Credits
+
+- Clerk Organizations (https://clerk.dev/)
+- Next.js (https://nextjs.org/)
+
+### Contact
+
+If you have any questions or need support, feel free to contact the project maintainers:
+
+- Name - Eugene Musebe
+- Email- emusebe9@gmail.com
+
+---
+
