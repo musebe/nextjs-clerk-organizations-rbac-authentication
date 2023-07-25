@@ -17,7 +17,7 @@ Before getting started, ensure you have the following installed:
 
 To install and run the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/your-project.git`
+1. Clone the repository: `git clone https://github.com/musebe/nextjs-clerk-organizations-rbac-authentication`
 2. Navigate to the project folder: `cd your-project`
 3. Install the dependencies: `npm install` or `yarn install`
 4. Start the development server: `npm run dev` or `yarn dev`
