@@ -2,6 +2,7 @@ import '@styles/globals.css'
 import Navbar from "@components/Navbar"
 import { ClerkProvider } from '@clerk/nextjs';
 import { Footer } from '@components';
+import { AuthProvider } from '../contexts/AuthContext';
 
 
 
@@ -11,7 +12,10 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
+
   return (
+    <AuthProvider>
     <ClerkProvider>
       <html lang='en'>
         <body>
@@ -27,5 +31,6 @@ export default function RootLayout({ children }) {
         </body>
       </html>
     </ClerkProvider>
+    </AuthProvider>
   );
 }

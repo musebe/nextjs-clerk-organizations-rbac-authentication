@@ -1,7 +1,20 @@
 'use client';
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const Admin = () => {
+  const router = useRouter();
+  const { userRole } = useAuth();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('role') !== 'admin') {
+      // Redirect to the appropriate page for non-admin users
+      router.push('/user');
+    }
+  }, []);
+
   // Dummy user data for the user table
   const [users, setUsers] = useState([
     {

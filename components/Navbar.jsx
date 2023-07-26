@@ -1,14 +1,32 @@
-"use client"
+'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Collapse from 'react-collapse';
+import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
-  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const { userRole} = useAuth();
 
-  const toggleNavbar = () => {
-    setIsNavbarOpen(!isNavbarOpen);
+  console.log(userRole);
+
+  const [links, setLinks] = useState([
+    { title: 'Profile', url: '/profile' },
+    { title: 'Dashboard', url: '/user' },
+    { title: 'Admin Dashboard', url: '/admin', role: 'admin' }, // Add role info for the link
+    // Add more placeholder links as needed
+  ]);
+
+  const { session } = useSession();
+
+  // Define the role function within the component
+  const getRole = () => {
+    return sessionStorage.getItem('role');
   };
+
+  if (session === null) {
+    sessionStorage.clear(); // This will clear all data stored in sessionStorage
+  }
 
   return (
     <header className='text-gray-600 body-font bg-white shadow'>
@@ -33,43 +51,44 @@ const Navbar = () => {
             <span className='ml-3 text-xl'>SecureClerk</span>
           </a>
         </div>
-        <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center'>
-          <a href='#' className='mr-5 hover:text-gray-900'>
-            Profile
-          </a>
-          <a href='/user' className='mr-5 hover:text-gray-900'>
-            User Dashboard
-          </a>
-          <a href='/admin' className='mr-5 hover:text-gray-900'>
-            Admin Dashboard
-          </a>
-        </nav>
-        <div className='md:ml-auto md:mr-0 flex items-center'>
-          <button className='text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-base mr-4'>
-            Login
-          </button>
-          <button className='text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-base'>
-            Sign Up
-          </button>
-        </div>
-        {/* Mobile accordion */}
-        {/* <button
-          className='block md:hidden mt-4 focus:outline-none'
-          onClick={toggleNavbar}
-        >
-          <svg
-            className='w-6 h-6'
-            fill='none'
-            stroke='currentColor'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth='2'
-            viewBox='0 0 24 24'
-          >
-            <path d='M4 6h16M4 12h16m-7 6h7'></path>
-          </svg>
-        </button> */}
-        <Collapse isOpened={isNavbarOpen} className='w-full md:hidden'>
+        <SignedIn>
+          <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center'>
+            {links.map((link) =>
+              // If user has admin role or link has no role, show the link
+              (link.role === 'admin' && userRole === 'admin') || !link.role ? (
+                <a
+                  key={link.title}
+                  href={link.url}
+                  className='mr-5 hover:text-gray-900'
+                >
+                  {link.title}
+                </a>
+              ) : null
+            )}
+          </nav>
+        </SignedIn>
+
+        <SignedOut>
+          <div className='md:ml-auto md:mr-0 flex items-center'>
+            <a href='/sign-in'>
+              <button className='text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-base mr-4'>
+                Login
+              </button>
+            </a>
+            <a href='/sign-up'>
+              <button className='text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-base'>
+                Sign Up
+              </button>
+            </a>
+          </div>
+        </SignedOut>
+        <SignedIn>
+          <div className='ml-4'>
+            <UserButton afterSignOutUrl='/' />
+          </div>
+        </SignedIn>
+
+        <Collapse className='w-full md:hidden'>
           {/* Content of the mobile accordion */}
           <nav className='flex flex-col items-center mt-4'>
             <a href='#' className='mb-2 hover:text-gray-900'>
