@@ -1,19 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useRouter } from 'next/navigation';
+// Import the necessary modules
+import React, { useState} from 'react';
+import { useSession } from '@clerk/nextjs';
 
 const Admin = () => {
-  const router = useRouter();
-  const { userRole } = useAuth();
-
-  useEffect(() => {
-    if (sessionStorage.getItem('role') !== 'admin') {
-      // Redirect to the appropriate page for non-admin users
-      router.push('/user');
-    }
-  }, []);
 
   // Dummy user data for the user table
   const [users, setUsers] = useState([
@@ -54,11 +45,10 @@ const Admin = () => {
     addUser(newUser);
     e.target.reset();
   };
-
   return (
-    <div className='flex bg-indigo-100 min-h-screen'>
+    <div className='flex flex-col md:flex-row bg-indigo-100 min-h-screen'>
       {/* Side Navbar */}
-      <nav className='bg-blue-200 w-1/6 p-4'>
+      <nav className='bg-blue-200 w-full md:w-1/6 p-4'>
         <h2 className='text-2xl font-bold mb-4 text-white'>Admin Panel</h2>
         <ul className='text-lg'>
           <li className='my-2'>
@@ -73,7 +63,7 @@ const Admin = () => {
         </ul>
       </nav>
 
-      <div className='flex flex-col w-5/6 items-center justify-center'>
+      <div className='flex flex-col w-full md:w-5/6 items-center justify-center'>
         {/* Admin Image */}
         <div className='mb-8'>
           <img
