@@ -1,31 +1,24 @@
 'use client';
-// Import necessary modules and components
-import { useState } from 'react';
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
 import { checkUserRole } from '../utils/userUtils';
 
-// Navbar component
 const Navbar = () => {
-  // Get the user session using Clerk's useSession hook
   const { session } = useSession();
+  const userRole = checkUserRole(session);
 
-  // Define the navigation links with their titles, URLs, and optional roles
-  const [links, setLinks] = useState([
+  const links = [
     { title: 'Profile', url: '/profile' },
     { title: 'Dashboard', url: '/user' },
-    { title: 'Admin Dashboard', url: '/admin', role: 'admin' }, // Add role info for the link
+    { title: 'Admin Dashboard', url: '/admin', role: 'admin' },
     // Add more placeholder links as needed
-  ]);
-
-  // Get the user's role using the checkUserRole utility function
-  const userRole = checkUserRole(session);
+  ];
 
   return (
     <header className='text-gray-600 body-font bg-white shadow'>
-      <div className='container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center'>
-        <div className='flex items-center mb-4 md:mb-0'>
-          {/* Brand logo and name */}
+      <div className='container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between'>
+        <div className='flex items-center'>
           <a
             href='/'
             className='flex title-font font-medium items-center text-gray-900'
@@ -45,24 +38,22 @@ const Navbar = () => {
             <span className='ml-3 text-xl'>SecureClerk</span>
           </a>
         </div>
-        <SignedIn>
-          {/* Navigation links for signed-in users */}
-          <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center'>
+        <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center'>
+          <SignedIn>
             {links.map((link) =>
-              // If user has admin role or link has no role, show the link
               (link.role === 'admin' && userRole === 'admin') || !link.role ? (
                 <Link key={link.title} href={link.url}>
-                  {/* Wrap the content inside the Link component */}
-                  <div className='mr-5 hover:text-gray-900'>{link.title}</div>
+                  {/* Use a div instead of an anchor tag */}
+                  <div className='mr-5 cursor-pointer hover:text-gray-900'>
+                    {link.title}
+                  </div>
                 </Link>
               ) : null
             )}
-          </nav>
-        </SignedIn>
-
-        <SignedOut>
-          {/* Buttons for signed-out users */}
-          <div className='md:ml-auto md:mr-0 flex items-center'>
+          </SignedIn>
+        </nav>
+        <div className='md:flex items-center'>
+          <SignedOut>
             <a href='/sign-in'>
               <button className='text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-base mr-4'>
                 Login
@@ -73,14 +64,13 @@ const Navbar = () => {
                 Sign Up
               </button>
             </a>
-          </div>
-        </SignedOut>
-        <SignedIn>
-          {/* User button for signed-in users */}
-          <div className='ml-4'>
-            <UserButton afterSignOutUrl='/' />
-          </div>
-        </SignedIn>
+          </SignedOut>
+          <SignedIn>
+            <div className='ml-4'>
+              <UserButton afterSignOutUrl='/' />
+            </div>
+          </SignedIn>
+        </div>
       </div>
     </header>
   );
