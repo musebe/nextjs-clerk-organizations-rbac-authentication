@@ -1,7 +1,6 @@
-'use client';
 // Import necessary modules and components
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'; // Added useState
 import { useRouter } from 'next/navigation';
 import Sidebar from './Sidebar';
 import UsersTable from './UsersTable';
@@ -37,6 +36,18 @@ const Admin = () => {
   // Next.js router
   const router = useRouter();
 
+  // State to control the loading delay
+  const [showLoader, setShowLoader] = useState(true);
+
+  // Simulate a 5-second delay before hiding the loader
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+    }, 5000);
+
+    return () => clearTimeout(timer); // Clear the timer on component unmount
+  }, []);
+
   // Wait for organization data to load and check if the user's role is not admin
   useEffect(() => {
     if (isLoaded) {
@@ -45,15 +56,12 @@ const Admin = () => {
         (org) => org.membership.role === 'admin'
       );
 
-      // Debug log: Uncomment the following line to see the organizationList and adminOrganization in the console
-      // console.log('organizationList:', organizationList, 'adminOrganization:', adminOrganization);
-
       // If the user is not an admin, redirect to the homepage
       if (!adminOrganization || adminOrganization.membership.role !== 'admin') {
         router.push('/'); // Replace '/' with the homepage URL
-
-        // Debug log: Uncomment the following line to see that the redirection is triggered
-        // console.log('Redirecting to homepage...');
+      } else {
+        // If the user is an admin, no need to wait for organization list, directly render the admin page
+        setShowLoader(false);
       }
     }
   }, [isLoaded, organizationList]);
@@ -74,13 +82,10 @@ const Admin = () => {
     ? adminOrganization.organization.imageUrl
     : '/admin.jpeg'; // Replace with the default admin image URL or any other fallback image
 
-  // Render a loading state while waiting for organization data to load
-  if (!isLoaded) {
+  // Render the loader while waiting for organization data to load
+  if (showLoader) {
     return <Loading />;
   }
-
-  // Debug log: Uncomment the following line to see the admin details in the console
-  // console.log('Admin details:', { adminName, adminRole, adminImageUrl });
 
   // Render the admin page if the user's role is "admin"
   return (
