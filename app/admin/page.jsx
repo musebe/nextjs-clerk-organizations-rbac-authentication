@@ -2,6 +2,7 @@
 'use client';
 import React, { useEffect, useState } from 'react'; // Added useState
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Sidebar from './Sidebar';
 import UsersTable from './UsersTable';
 import AddUserForm from './AddUserForm';
@@ -101,8 +102,9 @@ const Admin = () => {
           <p className='text-lg font-semibold'>Role: {adminRole}</p>
         </div>
         {/* Admin Image */}
-        <img
-          className='object-cover object-center w-32 h-32 rounded-full mb-8'
+        <Image
+          width={300}
+          height={300}
           src={adminImageUrl}
           alt='Admin'
         />
