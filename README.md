@@ -1,14 +1,19 @@
 ## Using Clerk Organizations to Create Role-Based (RBAC) Authentication in Next.js
 
-
+ 
 
 ### Overview
 
 This project demonstrates how to implement Role-Based Access Control (RBAC) authentication in a Next.js application using Clerk Organizations. Clerk Organizations is a user authentication and management platform that allows you to easily add RBAC functionality to your web applications.
 
+### Article Link 
+
+[Implementing Role-Based Access Control in Next.js App Router using Clerk Organizations](https://dev.to/musebe/implementing-role-based-access-control-in-nextjs-app-router-using-clerk-organizations-566g)
 ### Deployed Website
 
 [https://nextjs-clerk-organizations-rbac-authentication.vercel.app/](https://nextjs-clerk-organizations-rbac-authentication.vercel.app/)
+
+
 
 ### Prerequisites
 
@@ -49,6 +54,7 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
 - Follow the integration guide provided by Clerk (https://clerk.com/docs/organizations/overview) to use Clerk Organizations into your Next.js application.
 - Use the Clerk API to manage user roles and permissions based on the organizations they belong to.
+- You can follow this tutorial to set up Organizations : [Implementing Role-Based Access Control in Next.js App Router using Clerk Organizations](https://dev.to/musebe/implementing-role-based-access-control-in-nextjs-app-router-using-clerk-organizations-566g)
 
 ### Configuration
 
